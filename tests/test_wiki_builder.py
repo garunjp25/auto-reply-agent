@@ -75,3 +75,26 @@ def test_wiki_builder_writes_md_and_persists_chunks(tmp_path: Path, db):
 def test_system_prompt_mentions_no_hallucination():
     assert "don't" in PRODUCT_SYSTEM_PROMPT.lower() or "do not" in PRODUCT_SYSTEM_PROMPT.lower()
     assert "invent" in PRODUCT_SYSTEM_PROMPT.lower() or "fabricat" in PRODUCT_SYSTEM_PROMPT.lower()
+
+
+def test_wiki_builder_without_embedder_only_writes_md(tmp_path: Path, db):
+    fake_md = "# X\n\nFirst.\n\nSecond."
+    sdk = MagicMock()
+    fake_resp = MagicMock()
+    fake_resp.id = "msg_noemb"
+    fake_resp.usage.input_tokens = 10
+    fake_resp.usage.output_tokens = 5
+    fake_resp.usage.cache_read_input_tokens = 0
+    fake_resp.usage.cache_creation_input_tokens = 0
+    fake_resp.content = [MagicMock(text=fake_md)]
+    sdk.messages.create.return_value = fake_resp
+    llm = LLMClient(sdk=sdk, conn=db)
+
+    builder = WikiBuilder(llm=llm, wiki_dir=tmp_path, conn=db)  # no embedder
+    builder.build_one({"id": "x", "name": "X"})
+
+    assert (tmp_path / "x.md").exists()
+    rows = db.execute(
+        "SELECT COUNT(*) FROM wiki_index WHERE product_id='x'"
+    ).fetchone()
+    assert rows[0] == 0  # no embeddings persisted when embedder is None

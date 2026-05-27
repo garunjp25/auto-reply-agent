@@ -21,6 +21,7 @@ from auto_reply.pipeline.intent_router import INTENTS, SYSTEM_PROMPT, _parse_int
 from auto_reply.settings import get_settings
 from auto_reply.store.db import connect
 from auto_reply.store.migrations import apply_migrations
+from auto_reply.tls import enable_system_certs
 
 FIXTURE_DIR = Path(__file__).resolve().parents[1] / "tests" / "fixtures"
 EXPORT_PATH = FIXTURE_DIR / "lumenx_export.json"
@@ -42,6 +43,7 @@ def collect_customer_messages(export: dict) -> list[str]:
 
 
 def main() -> None:
+    enable_system_certs()
     settings = get_settings()
     if not EXPORT_PATH.exists():
         raise SystemExit(

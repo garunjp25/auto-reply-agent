@@ -56,9 +56,9 @@ class WikiBuilder:
         self,
         *,
         llm: LLMClient,
-        embedder: _Embedder,
         wiki_dir: Path,
         conn: sqlite3.Connection,
+        embedder: _Embedder | None = None,
         draft_model: str = "claude-sonnet-4-6",
     ) -> None:
         self._llm = llm
@@ -83,6 +83,9 @@ class WikiBuilder:
             max_tokens=2048,
         )
         (self._wiki_dir / f"{product_id}.md").write_text(md, encoding="utf-8")
+
+        if self._embedder is None:
+            return  # wiki/*.md is the deliverable; embeddings are optional.
 
         texts = chunk_markdown(md)
         if not texts:

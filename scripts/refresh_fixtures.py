@@ -8,11 +8,13 @@ from pathlib import Path
 
 from auto_reply.settings import get_settings
 from auto_reply.sources.lumenx import LumenXClient
+from auto_reply.tls import enable_system_certs
 
 FIXTURE_DIR = Path(__file__).resolve().parents[1] / "tests" / "fixtures"
 
 
 def main() -> None:
+    enable_system_certs()
     FIXTURE_DIR.mkdir(parents=True, exist_ok=True)
     settings = get_settings()
     with LumenXClient(settings.lumenx_base, settings.lumenx_admin_token) as client:
