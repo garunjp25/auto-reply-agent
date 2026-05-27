@@ -1,0 +1,836 @@
+{
+  "count": 20,
+  "company": {
+    "name": "Lumenx",
+    "tagline": "Small tools, big leverage.",
+    "description": "Lumenx builds focused micro-software for small and mid-sized teams. Every product does one thing, integrates with the others, and is priced so a single person can adopt it without filing a budget request.",
+    "founded": 2022,
+    "headquarters": "Bengaluru, India",
+    "support_email": "hello@lumenx.app",
+    "support_hours": "Mon to Fri, 9am to 9pm IST",
+    "billing_currency": "USD",
+    "refund_window_days": 14,
+    "free_trial_days": 14,
+    "annual_discount_pct": 20,
+    "startup_program": {
+      "name": "Lumenx Liftoff",
+      "eligibility": "Companies under 2 years old with under USD 1M in funding.",
+      "discount_pct": 30,
+      "duration_months": 12
+    },
+    "education_program": {
+      "name": "Lumenx Campus",
+      "eligibility": "Verified students, teachers, and registered non-profits.",
+      "discount_pct": 50
+    },
+    "bundle": {
+      "name": "Lumenx Suite",
+      "description": "Any 5 Lumenx products on the Pro plan billed together.",
+      "discount_pct": 25
+    }
+  },
+  "products": [
+    {
+      "id": "emailpilot",
+      "name": "EmailPilot",
+      "category": "Communication",
+      "tagline": "AI drafting for your inbox.",
+      "description": "EmailPilot watches your inbox and drafts replies that sound like you. It learns your tone from past sent messages and pulls context from attached files. You stay in control: every reply lands as a draft until you hit send.",
+      "features": [
+        "Tone-matched draft replies",
+        "Attachment-aware context",
+        "Per-thread summary",
+        "Snooze and follow-up reminders",
+        "Works with Gmail and Outlook"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 9,
+          "seats": 1,
+          "drafts_per_month": 200
+        },
+        "pro": {
+          "monthly_usd": 19,
+          "seats": 1,
+          "drafts_per_month": 2000
+        },
+        "team": {
+          "monthly_usd": 14,
+          "seats": "per seat, min 5",
+          "drafts_per_month": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Plan remains active until the end of the current billing period.",
+      "refund": "Full refund within 14 days of first purchase.",
+      "integrations": [
+        "Gmail",
+        "Outlook",
+        "Google Drive",
+        "Notion"
+      ],
+      "target_audience": "Founders, consultants, and customer-facing roles drowning in email.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "invoiceflow",
+      "name": "InvoiceFlow",
+      "category": "Finance",
+      "tagline": "Invoices that get paid faster.",
+      "description": "InvoiceFlow turns a one-line description into a polished invoice in seconds. Automatic reminders go out on day 3, 7, and 14 after due date. Payments arrive directly into your bank through Stripe or Razorpay.",
+      "features": [
+        "Branded invoice templates",
+        "Multi-currency support",
+        "Automatic late reminders",
+        "Stripe and Razorpay payouts",
+        "GST and VAT compliant"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 7,
+          "invoices_per_month": 25
+        },
+        "pro": {
+          "monthly_usd": 15,
+          "invoices_per_month": 200
+        },
+        "team": {
+          "monthly_usd": 39,
+          "invoices_per_month": "unlimited",
+          "seats": 10
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Your data is exportable as CSV for 30 days after cancellation.",
+      "refund": "Pro-rated refund within 14 days of first purchase.",
+      "integrations": [
+        "Stripe",
+        "Razorpay",
+        "QuickBooks",
+        "Zoho Books"
+      ],
+      "target_audience": "Freelancers, agencies, and small service businesses.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "taskgrid",
+      "name": "TaskGrid",
+      "category": "Productivity",
+      "tagline": "Spreadsheet-fast task tracking.",
+      "description": "TaskGrid is a task tracker that feels like a spreadsheet but behaves like a project tool. Group, filter, and pivot tasks by anyone, due date, or custom tag. Built for teams that find Jira too heavy and a checklist too thin.",
+      "features": [
+        "Spreadsheet-style task grid",
+        "Custom fields and tags",
+        "Saved views per teammate",
+        "CSV import and export",
+        "Slack and email digests"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "seats": 3,
+          "tasks_per_workspace": 200
+        },
+        "pro": {
+          "monthly_usd": 9,
+          "seats": "per seat",
+          "tasks_per_workspace": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 7,
+          "seats": "per seat, min 10",
+          "tasks_per_workspace": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Free plan stays available forever for solo workspaces.",
+      "refund": "Refund within 14 days for paid plans.",
+      "integrations": [
+        "Slack",
+        "Google Calendar",
+        "GitHub",
+        "Linear"
+      ],
+      "target_audience": "Small ops teams, founders, and operations leads.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "formcraft",
+      "name": "FormCraft",
+      "category": "Data Collection",
+      "tagline": "Forms that don't feel like forms.",
+      "description": "FormCraft helps you build conversational forms that double completion rates. Logic jumps, hidden fields, and partial response capture come standard. Submissions land in a clean dashboard or any webhook you point at.",
+      "features": [
+        "Conversational and classic layouts",
+        "Logic jumps and hidden fields",
+        "Partial response capture",
+        "File uploads up to 50 MB",
+        "Webhook and Zapier output"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "forms": 3,
+          "responses_per_month": 100
+        },
+        "pro": {
+          "monthly_usd": 19,
+          "forms": "unlimited",
+          "responses_per_month": 5000
+        },
+        "team": {
+          "monthly_usd": 49,
+          "forms": "unlimited",
+          "responses_per_month": 50000
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Free plan stays active.",
+      "refund": "Refund within 14 days of first paid purchase.",
+      "integrations": [
+        "Zapier",
+        "Webhooks",
+        "Google Sheets",
+        "HubSpot"
+      ],
+      "target_audience": "Marketers, researchers, and customer success teams.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "calendarsync",
+      "name": "CalendarSync",
+      "category": "Scheduling",
+      "tagline": "Booking links that respect your day.",
+      "description": "CalendarSync gives every teammate a polished booking link with built-in buffer time and meeting caps. Connect Google or Microsoft calendars and let attendees pick from real free slots. Round-robin and collective scheduling are built in.",
+      "features": [
+        "Personal booking pages",
+        "Round-robin and collective slots",
+        "Daily meeting cap and buffer time",
+        "Zoom, Meet, and Teams links",
+        "Two-way Google and Microsoft sync"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "event_types": 1
+        },
+        "pro": {
+          "monthly_usd": 12,
+          "event_types": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 10,
+          "seats": "per seat, min 5",
+          "event_types": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Google Calendar",
+        "Microsoft 365",
+        "Zoom",
+        "Google Meet",
+        "Microsoft Teams"
+      ],
+      "target_audience": "Sales, recruiting, and any role that lives in meetings.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "notehub",
+      "name": "NoteHub",
+      "category": "Knowledge",
+      "tagline": "Notes you can actually find later.",
+      "description": "NoteHub is a markdown-first notes app with backlinks and a graph view. Pages cross-reference automatically as you type. Search runs locally so it stays fast even with 10,000 notes.",
+      "features": [
+        "Markdown editor with live preview",
+        "Backlinks and graph view",
+        "Local-first search",
+        "Daily journal template",
+        "End-to-end encrypted sync"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "notes": 200,
+          "devices": 2
+        },
+        "pro": {
+          "monthly_usd": 6,
+          "notes": "unlimited",
+          "devices": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 9,
+          "seats": "per seat",
+          "shared_spaces": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Notes remain readable offline forever.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Obsidian export",
+        "Apple Notes import",
+        "Markdown export"
+      ],
+      "target_audience": "Researchers, writers, and engineering teams.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "chatrelay",
+      "name": "ChatRelay",
+      "category": "Customer Support",
+      "tagline": "Customer chat that doesn't need a war room.",
+      "description": "ChatRelay is a website chat widget and inbox for small teams. Route by topic, set business hours, and auto-reply when nobody is online. Connect to email, WhatsApp, and Slack so no message slips through.",
+      "features": [
+        "Embeddable chat widget",
+        "Multi-channel inbox",
+        "Topic routing",
+        "Business-hours auto-reply",
+        "Saved replies and shortcuts"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "seats": 1,
+          "conversations_per_month": 100
+        },
+        "pro": {
+          "monthly_usd": 25,
+          "seats": 5,
+          "conversations_per_month": 2000
+        },
+        "team": {
+          "monthly_usd": 69,
+          "seats": 20,
+          "conversations_per_month": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Inbox history exports as JSON.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Slack",
+        "WhatsApp Business",
+        "Email",
+        "Zapier"
+      ],
+      "target_audience": "Small support teams, e-commerce shops, SaaS startups.",
+      "support_sla_hours": 12
+    },
+    {
+      "id": "signpath",
+      "name": "SignPath",
+      "category": "Documents",
+      "tagline": "E-signatures without the per-document tax.",
+      "description": "SignPath collects legally valid e-signatures with a flat monthly fee. Drag fields onto a PDF, pick signers, and track who has opened, viewed, and signed. Audit trail is included by default.",
+      "features": [
+        "Drag-to-place signature fields",
+        "Sequential and parallel signers",
+        "Audit trail with IP and timestamp",
+        "Bulk send to up to 200 recipients",
+        "Templates for common contracts"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 12,
+          "documents_per_month": 20
+        },
+        "pro": {
+          "monthly_usd": 29,
+          "documents_per_month": 200
+        },
+        "team": {
+          "monthly_usd": 79,
+          "documents_per_month": "unlimited",
+          "seats": 10
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Signed PDFs are yours and downloadable forever.",
+      "refund": "14 day refund window for first purchase.",
+      "integrations": [
+        "Google Drive",
+        "Dropbox",
+        "Salesforce",
+        "HubSpot"
+      ],
+      "target_audience": "Sales ops, HR, and legal in small companies.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "pollwise",
+      "name": "PollWise",
+      "category": "Research",
+      "tagline": "Run a poll in under a minute.",
+      "description": "PollWise is a focused tool for short surveys and quick polls. Distribute by link, email, or QR code. Get instant cross-tabs and CSV exports without spreadsheet wrangling.",
+      "features": [
+        "Single-question or multi-question polls",
+        "QR code distribution",
+        "Live result dashboards",
+        "Cross-tabs and filters",
+        "Anonymous mode"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "polls_per_month": 5,
+          "responses_per_poll": 100
+        },
+        "pro": {
+          "monthly_usd": 12,
+          "polls_per_month": "unlimited",
+          "responses_per_poll": 5000
+        },
+        "team": {
+          "monthly_usd": 29,
+          "polls_per_month": "unlimited",
+          "responses_per_poll": "unlimited",
+          "seats": 10
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Slack",
+        "Google Sheets",
+        "Microsoft Teams"
+      ],
+      "target_audience": "Product, marketing, and research teams.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "receiptvault",
+      "name": "ReceiptVault",
+      "category": "Finance",
+      "tagline": "Snap, store, and reclaim every receipt.",
+      "description": "ReceiptVault turns paper receipts and email confirmations into searchable expense records. OCR extracts merchant, amount, currency, and tax in seconds. Sync to your accounting tool or export a tidy CSV at month end.",
+      "features": [
+        "Mobile receipt capture",
+        "Email forwarding ingestion",
+        "OCR with currency and tax extraction",
+        "Per-project tagging",
+        "Sync to QuickBooks and Zoho Books"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 5,
+          "receipts_per_month": 50
+        },
+        "pro": {
+          "monthly_usd": 12,
+          "receipts_per_month": 500
+        },
+        "team": {
+          "monthly_usd": 29,
+          "receipts_per_month": "unlimited",
+          "seats": 10
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Data exports as CSV and PDFs.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "QuickBooks",
+        "Zoho Books",
+        "Tally",
+        "Google Drive"
+      ],
+      "target_audience": "Founders, traveling professionals, and finance ops.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "timemark",
+      "name": "TimeMark",
+      "category": "Productivity",
+      "tagline": "Time tracking that doesn't nag.",
+      "description": "TimeMark is a quiet time tracker for individuals and small teams. Auto-detects what you are working on and groups it by project at the end of the day. One-click invoices feed into InvoiceFlow.",
+      "features": [
+        "Auto-detection of active project",
+        "Manual time entries",
+        "Per-project hourly rates",
+        "Weekly digests",
+        "InvoiceFlow handoff"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "projects": 3
+        },
+        "pro": {
+          "monthly_usd": 8,
+          "projects": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 6,
+          "seats": "per seat, min 5"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "InvoiceFlow",
+        "TaskGrid",
+        "Toggl import",
+        "CSV export"
+      ],
+      "target_audience": "Freelancers and small agencies.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "documerge",
+      "name": "DocuMerge",
+      "category": "Documents",
+      "tagline": "PDFs you don't have to fight.",
+      "description": "DocuMerge merges, splits, compresses, and signs PDFs from one clean interface. Drag in 100 files, get one tidy PDF. Built on a local engine so your documents never leave your browser unless you ask.",
+      "features": [
+        "Merge, split, rotate, reorder pages",
+        "Compress without quality loss",
+        "Local processing in browser",
+        "Optional cloud history",
+        "Batch rename"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "files_per_day": 10
+        },
+        "pro": {
+          "monthly_usd": 7,
+          "files_per_day": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 19,
+          "seats": 10
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Google Drive",
+        "Dropbox",
+        "OneDrive"
+      ],
+      "target_audience": "Anyone who works with PDFs more than once a week.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "kanbanlite",
+      "name": "KanbanLite",
+      "category": "Productivity",
+      "tagline": "A kanban board, nothing more.",
+      "description": "KanbanLite is a fast, no-frills board for visual task flow. Columns, cards, and a single label per card. Made for teams that want kanban without ten plugins.",
+      "features": [
+        "Unlimited boards on paid plans",
+        "Keyboard-driven card creation",
+        "Single label per card by design",
+        "Public read-only links",
+        "JSON import and export"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "boards": 2
+        },
+        "pro": {
+          "monthly_usd": 6,
+          "boards": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 5,
+          "seats": "per seat, min 5"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "TaskGrid",
+        "GitHub Issues",
+        "CSV"
+      ],
+      "target_audience": "Engineering and design teams.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "meetminutes",
+      "name": "MeetMinutes",
+      "category": "Meetings",
+      "tagline": "Meeting notes that actually capture decisions.",
+      "description": "MeetMinutes joins your Zoom, Meet, or Teams call and writes structured notes. Decisions, action items, and open questions land in your inbox five minutes after the call ends. Full transcript stays searchable.",
+      "features": [
+        "Auto-join via calendar",
+        "Decision and action-item extraction",
+        "Speaker-aware transcripts",
+        "Searchable archive",
+        "Privacy mode for muted segments"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "meetings_per_month": 5
+        },
+        "pro": {
+          "monthly_usd": 18,
+          "meetings_per_month": 50
+        },
+        "team": {
+          "monthly_usd": 14,
+          "seats": "per seat, min 5",
+          "meetings_per_month": "unlimited"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Transcripts remain downloadable for 90 days after.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Zoom",
+        "Google Meet",
+        "Microsoft Teams",
+        "Slack",
+        "Notion"
+      ],
+      "target_audience": "Product, sales, and leadership teams.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "pixeldeck",
+      "name": "PixelDeck",
+      "category": "Design",
+      "tagline": "Slides built in markdown, exported as pixels.",
+      "description": "PixelDeck is for engineers and educators who want polished decks without dragging text boxes. Write in markdown, get a deck that looks designed. Export as PDF, PPTX, or a hosted URL.",
+      "features": [
+        "Markdown editor with live preview",
+        "20 themes, 5 color schemes",
+        "PDF, PPTX, and hosted-URL export",
+        "Speaker notes",
+        "Diagram blocks (flow, sequence, mermaid)"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "decks": 3
+        },
+        "pro": {
+          "monthly_usd": 9,
+          "decks": "unlimited"
+        },
+        "team": {
+          "monthly_usd": 7,
+          "seats": "per seat, min 5"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "GitHub",
+        "Google Drive",
+        "Notion"
+      ],
+      "target_audience": "Engineers, educators, and technical founders.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "inboxclean",
+      "name": "InboxClean",
+      "category": "Communication",
+      "tagline": "Triage your inbox in three minutes a day.",
+      "description": "InboxClean groups your inbox into Now, Later, and Forever-Maybe. Bulk unsubscribe with one tap. Promotions and receipts get auto-filed using ReceiptVault rules.",
+      "features": [
+        "Now, Later, Maybe triage view",
+        "One-tap bulk unsubscribe",
+        "Sender reputation scoring",
+        "Promotions auto-filing",
+        "Snooze with smart resurface"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 5,
+          "accounts": 1
+        },
+        "pro": {
+          "monthly_usd": 12,
+          "accounts": 3
+        },
+        "team": {
+          "monthly_usd": 10,
+          "seats": "per seat, min 5"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. We never touch your messages on the server after cancellation.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Gmail",
+        "Outlook",
+        "ReceiptVault"
+      ],
+      "target_audience": "Executives, founders, and consultants.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "teampulse",
+      "name": "TeamPulse",
+      "category": "People",
+      "tagline": "Lightweight pulse surveys for real teams.",
+      "description": "TeamPulse runs short, recurring surveys that take 90 seconds to answer. Trends show up over weeks, not after a yearly engagement push. Anonymous by default and aggregated above a five-person floor.",
+      "features": [
+        "Weekly, biweekly, or monthly cadence",
+        "Anonymous by default",
+        "Five-person aggregation floor",
+        "eNPS and custom themes",
+        "Slack and Teams delivery"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "seats": 10
+        },
+        "pro": {
+          "monthly_usd": 4,
+          "seats": "per seat"
+        },
+        "team": {
+          "monthly_usd": 3,
+          "seats": "per seat, min 50"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Aggregated history exports as CSV.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Slack",
+        "Microsoft Teams",
+        "BambooHR",
+        "Workday export"
+      ],
+      "target_audience": "People ops and engineering managers.",
+      "support_sla_hours": 24
+    },
+    {
+      "id": "linkvault",
+      "name": "LinkVault",
+      "category": "Knowledge",
+      "tagline": "Shared bookmarks that don't go stale.",
+      "description": "LinkVault is a shared bookmark manager for teams. Saved links get auto-tagged and re-checked weekly so dead URLs surface fast. Searchable from a browser extension or a Slack slash command.",
+      "features": [
+        "Browser extension and Slack command",
+        "Auto-tagging from page content",
+        "Weekly dead-link sweep",
+        "Per-collection sharing",
+        "Read later queue"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 0,
+          "links": 100,
+          "seats": 3
+        },
+        "pro": {
+          "monthly_usd": 5,
+          "links": "unlimited",
+          "seats": 10
+        },
+        "team": {
+          "monthly_usd": 4,
+          "seats": "per seat, min 10"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime.",
+      "refund": "14 day refund window.",
+      "integrations": [
+        "Slack",
+        "Chrome",
+        "Firefox",
+        "Safari"
+      ],
+      "target_audience": "Research, design, and engineering teams.",
+      "support_sla_hours": 48
+    },
+    {
+      "id": "billsplit",
+      "name": "BillSplit",
+      "category": "Finance",
+      "tagline": "Stripe-style subscription billing in a weekend.",
+      "description": "BillSplit gives small SaaS companies the subscription, dunning, and invoicing flow that usually takes a quarter to build. Hosted checkout, customer portal, and webhook events are all included. Switch on tax handling per country with one toggle.",
+      "features": [
+        "Hosted checkout and portal",
+        "Dunning and retry policy",
+        "Per-country tax handling",
+        "Stripe and Razorpay backends",
+        "Webhook event stream"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 29,
+          "monthly_revenue_cap_usd": 5000
+        },
+        "pro": {
+          "monthly_usd": 79,
+          "monthly_revenue_cap_usd": 50000
+        },
+        "team": {
+          "monthly_usd": 199,
+          "monthly_revenue_cap_usd": "uncapped"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Your customer and invoice data exports as a single ZIP.",
+      "refund": "14 day refund window for first purchase.",
+      "integrations": [
+        "Stripe",
+        "Razorpay",
+        "QuickBooks",
+        "Webhooks"
+      ],
+      "target_audience": "Indie SaaS founders and small SaaS companies.",
+      "support_sla_hours": 12
+    },
+    {
+      "id": "audittrail",
+      "name": "AuditTrail",
+      "category": "Compliance",
+      "tagline": "Compliance logging without the consulting bill.",
+      "description": "AuditTrail records who did what, where, and when across your stack. SOC 2 and ISO 27001 evidence packs are generated on demand. Drop in one SDK and your logs become audit-ready.",
+      "features": [
+        "Append-only event log",
+        "SOC 2 and ISO 27001 evidence packs",
+        "Per-user activity timeline",
+        "Configurable retention",
+        "SDKs for Node, Python, Go"
+      ],
+      "pricing": {
+        "starter": {
+          "monthly_usd": 49,
+          "events_per_month": 100000
+        },
+        "pro": {
+          "monthly_usd": 149,
+          "events_per_month": 1000000
+        },
+        "team": {
+          "monthly_usd": 399,
+          "events_per_month": "10M, then USD 0.10 per 1k"
+        }
+      },
+      "annual_discount_pct": 20,
+      "cancellation": "Cancel anytime. Logs remain readable for 30 days post-cancellation.",
+      "refund": "14 day refund window for first purchase.",
+      "integrations": [
+        "AWS CloudTrail",
+        "Datadog",
+        "Splunk",
+        "Webhooks"
+      ],
+      "target_audience": "Engineering and security teams in regulated industries.",
+      "support_sla_hours": 8
+    }
+  ]
+}

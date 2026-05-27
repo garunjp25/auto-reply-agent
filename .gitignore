@@ -9,3 +9,4 @@ data/
 dist/
 build/
 wiki/
+tests/fixtures/lumenx_export.json
