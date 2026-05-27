@@ -8,6 +8,9 @@ from anthropic import Anthropic
 from auto_reply.llm.pricing import cost_usd
 from auto_reply.store.db import transaction
 
+# Models that do not accept a `temperature` parameter (extended-thinking / opus-4+).
+_NO_TEMPERATURE_MODELS: frozenset[str] = frozenset({"claude-opus-4-7"})
+
 
 @dataclass
 class LLMClient:
@@ -36,13 +39,15 @@ class LLMClient:
         `system` may be a plain string or a list of system blocks (used for
         prompt caching with `cache_control`).
         """
-        resp = self.sdk.messages.create(
+        kwargs: dict[str, Any] = dict(
             model=model,
             system=system,
             messages=messages,
             max_tokens=max_tokens,
-            temperature=temperature,
         )
+        if model not in _NO_TEMPERATURE_MODELS:
+            kwargs["temperature"] = temperature
+        resp = self.sdk.messages.create(**kwargs)
         usage = resp.usage
         in_tok = getattr(usage, "input_tokens", 0) or 0
         out_tok = getattr(usage, "output_tokens", 0) or 0

@@ -1,0 +1,30 @@
+{"message": "Can I export my stuff first?", "intent": "feature_question"}
+{"message": "Cool. And saved views per teammate?", "intent": "feature_question"}
+{"message": "yes please share", "intent": "other"}
+{"message": "File upload on InboxClean keeps failing at 80 percent.", "intent": "technical"}
+{"message": "Non-profit here, any chance of a discount on NoteHub?", "intent": "pricing"}
+{"message": "Interested in EmailPilot plus PollWise and maybe ChatRelay. Do they play well together?", "intent": "integration"}
+{"message": "oh hi! just wanted to see if you were real haha. will come back with a real q.", "intent": "greeting"}
+{"message": "Can we add 2 more products to hit the bundle?", "intent": "pricing"}
+{"message": "Can I get a proper invoice for accounting? My finance team needs a PDF with company details.", "intent": "pricing"}
+{"message": "Where do i download invoices", "intent": "feature_question"}
+{"message": "tried it, no luck. still broken.", "intent": "technical"}
+{"message": "Can i have the list of products", "intent": "other"}
+{"message": "How do we verify it worked?", "intent": "feature_question"}
+{"message": "Need to cancel my PixelDeck subscription, where do I go?", "intent": "refund"}
+{"message": "is there a QuickBooks integration for InvoiceFlow? important for us", "intent": "integration"}
+{"message": "Explain product pricing", "intent": "pricing"}
+{"message": "Can you describe all product types", "intent": "feature_question"}
+{"message": "Looking at ChatRelay. Is topic routing something it does out of the box?", "intent": "feature_question"}
+{"message": "oh hi! just wanted to see if you were real haha. will come back with a real q.", "intent": "greeting"}
+{"message": "tried it, no luck. still broken.", "intent": "technical"}
+{"message": "Hey, trying to wire up NoteHub with Obsidian export. Possible?", "intent": "integration"}
+{"message": "Perfect, sending the info now.", "intent": "greeting"}
+{"message": "HI. Get me the list of the products", "intent": "other"}
+{"message": "Why pick DocuMerge over the big PDF tool? Already paying for that.", "intent": "other"}
+{"message": "What happens to my data after cancel?", "intent": "refund"}
+{"message": "Does CalendarSync support daily meeting cap and buffer time?", "intent": "feature_question"}
+{"message": "LLM wiki details", "intent": "other"}
+{"message": "Give me the Payce Pipeline for Middle east sales", "intent": "other"}
+{"message": "Got it. What about volume discounts if we go up to 10 seats?", "intent": "pricing"}
+{"message": "Cancel pls. Will I get a refund?", "intent": "refund"}
