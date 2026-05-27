@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}auto-reply{% endblock %}</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; max-width: 1100px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { font-size: 1.4rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #eee; vertical-align: top; }
+    th { background: #fafafa; font-weight: 600; }
+    .pill { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 1rem; font-size: 0.75rem; }
+    .pill-sensitive { background: #fee; color: #900; }
+    .pill-intent    { background: #eef; color: #225; }
+    pre.context { white-space: pre-wrap; max-height: 14rem; overflow: auto; background: #f7f7f7; padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+    .meta { color: #777; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <header><h1>auto-reply / {% block heading %}{% endblock %}</h1></header>
+  <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}queue · auto-reply{% endblock %}
+{% block heading %}queue ({{ drafts|length }} pending){% endblock %}
+
+{% block content %}
+{% if not drafts %}
+  <p>Nothing pending. The poller will queue new customer messages here.</p>
+{% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>When</th>
+        <th>Thread</th>
+        <th>Intent</th>
+        <th>Customer message</th>
+        <th>Draft reply</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in drafts %}
+      <tr>
+        <td class="meta">{{ d.created_at }}</td>
+        <td><code>{{ d.thread_id }}</code></td>
+        <td>
+          <span class="pill pill-intent">{{ d.intent }}</span>
+          {% if d.sensitive %}<span class="pill pill-sensitive">sensitive</span>{% endif %}
+        </td>
+        <td>{{ d.customer_msg }}</td>
+        <td>{{ d.draft_text }}</td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <details>
+            <summary class="meta">show context</summary>
+            <pre class="context">{{ d.context_json }}</pre>
+          </details>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}
