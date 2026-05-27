@@ -58,9 +58,13 @@ def test_get_graph_json_returns_graph(tmp_path: Path):
     r = client.get("/wiki/graph.json")
     assert r.status_code == 200
     body = r.json()
-    assert len(body["nodes"]) == 2
-    assert len(body["edges"]) == 1
-    assert body["nodes"][0]["id"] in {"emailpilot", "invoiceflow"}
+    # Two product nodes from the seed + one synthetic LumenX hub.
+    assert len(body["nodes"]) == 3
+    node_ids = {n["id"] for n in body["nodes"]}
+    assert node_ids == {"lumenx", "emailpilot", "invoiceflow"}
+    # Edges: 1 seed + 2 hub spokes (lumenx → each product).
+    assert len(body["edges"]) >= 3
+    assert all("category" in n for n in body["nodes"])
 
 
 def test_get_graph_json_503_when_not_built(tmp_path: Path):

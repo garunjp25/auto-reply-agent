@@ -14,6 +14,93 @@ from auto_reply.pipeline.wiki_qa import WikiQA
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 
+# Hand-curated category for each of the 20 LumenX products. The graph display
+# uses these to colour nodes by domain. "Hub" is reserved for the synthetic
+# central LumenX node.
+PRODUCT_CATEGORIES: dict[str, str] = {
+    "emailpilot":   "Communication",
+    "chatrelay":    "Communication",
+    "inboxclean":   "Communication",
+    "invoiceflow":  "Finance",
+    "receiptvault": "Finance",
+    "billsplit":    "Finance",
+    "taskgrid":     "Tasks & Projects",
+    "kanbanlite":   "Tasks & Projects",
+    "documerge":    "Documents",
+    "signpath":     "Documents",
+    "linkvault":    "Documents",
+    "audittrail":   "Documents",
+    "calendarsync": "Productivity",
+    "timemark":     "Productivity",
+    "meetminutes":  "Productivity",
+    "teampulse":    "Productivity",
+    "pollwise":     "Productivity",
+    "notehub":      "Core Pages",
+    "formcraft":    "Core Pages",
+    "pixeldeck":    "Core Pages",
+}
+
+HUB_ID = "lumenx"
+HUB_NODE = {
+    "id": HUB_ID,
+    "label": "LumenX",
+    "tagline": "central hub",
+    "summary": "LumenX Knowledge Universe — every product orbits this hub.",
+    "category": "Hub",
+}
+HUB_DOC_MARKDOWN = """# LumenX Knowledge Universe
+
+The central hub of the LumenX product knowledge base. Every product in the
+catalog is one click away. Click any orbiting planet to read its full wiki,
+or use the **Ask the Wiki** tab to query the entire corpus with sourced
+citations.
+
+## What lives here
+
+- **20 SaaS products** spanning Communication, Finance, Tasks & Projects,
+  Documents, Productivity, and Core Pages.
+- **Semantic cross-links** between products (shared audiences, shared
+  integrations, similar functions).
+- **Grounded Q&A** powered by Claude Sonnet 4.6 — every answer cites the
+  exact wiki it came from.
+"""
+
+
+def _categorize(product_id: str) -> str:
+    return PRODUCT_CATEGORIES.get(product_id, "Productivity")
+
+
+def _augment_graph(graph: dict[str, Any]) -> dict[str, Any]:
+    """Add `category` to every node and inject the synthetic LumenX hub.
+
+    The hub is connected to every product node so the layout naturally puts
+    it at the centre.
+    """
+    nodes_raw = graph.get("nodes", []) or []
+    edges_raw = graph.get("edges", []) or []
+
+    nodes: list[dict[str, Any]] = []
+    product_ids: list[str] = []
+    for n in nodes_raw:
+        if not isinstance(n, dict) or "id" not in n:
+            continue
+        product_ids.append(n["id"])
+        nodes.append({**n, "category": _categorize(n["id"])})
+
+    # Hub node + spoke edges.
+    nodes.insert(0, HUB_NODE)
+    hub_edges = [
+        {"source": HUB_ID, "target": pid, "relation": "hub", "reason": "hub spoke"}
+        for pid in product_ids
+    ]
+
+    edges: list[dict[str, Any]] = []
+    for e in edges_raw:
+        if isinstance(e, dict) and e.get("source") and e.get("target"):
+            edges.append(e)
+
+    return {"nodes": nodes, "edges": hub_edges + edges}
+
 
 class _AskBody(BaseModel):
     question: str = Field(min_length=1)
@@ -92,20 +179,37 @@ def make_router(
                 {"error": "graph not built; run scripts/build_wiki_graph.py"},
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
-        data: dict[str, Any] = json.loads(graph_path.read_text(encoding="utf-8"))
-        return JSONResponse(data)
+        raw: dict[str, Any] = json.loads(graph_path.read_text(encoding="utf-8"))
+        return JSONResponse(_augment_graph(raw))
 
     @router.get("/doc/{product_id}")
     def doc(product_id: str) -> dict[str, Any]:
         if not product_id.replace("-", "").replace("_", "").isalnum():
             raise HTTPException(status_code=404)
+        # The synthetic hub has no .md file — serve a hand-written intro.
+        if product_id == HUB_ID:
+            related = [
+                {"id": pid, "label": pid, "relation": "hub", "reason": _categorize(pid)}
+                for pid in PRODUCT_CATEGORIES.keys()
+            ]
+            return {
+                "product_id": HUB_ID,
+                "markdown": HUB_DOC_MARKDOWN + _format_related_section(related),
+                "related": related,
+                "category": "Hub",
+            }
         path = wiki_dir / f"{product_id}.md"
         if not path.exists() or not path.is_file():
             raise HTTPException(status_code=404)
         markdown = path.read_text(encoding="utf-8")
         related = _related_for(product_id, graph_path)
         markdown += _format_related_section(related)
-        return {"product_id": product_id, "markdown": markdown, "related": related}
+        return {
+            "product_id": product_id,
+            "markdown": markdown,
+            "related": related,
+            "category": _categorize(product_id),
+        }
 
     @router.post("/ask")
     def ask(body: _AskBody) -> dict[str, Any]:
