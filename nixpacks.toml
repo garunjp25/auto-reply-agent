@@ -1,12 +1,12 @@
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = ["python311", "uv"]
 
 [phases.install]
-cmds = ["pip install uv", "uv sync --frozen"]
+cmds = ["uv sync --frozen"]
 
 [phases.build]
 cmds = [
-  "uv run python scripts/build_wiki.py || echo 'WARN: wiki build skipped (check API keys)'",
+  "uv run python scripts/build_wiki.py || echo 'WARN: wiki build skipped'",
   "uv run python scripts/build_wiki_graph.py || echo 'WARN: graph build skipped'"
 ]
 
