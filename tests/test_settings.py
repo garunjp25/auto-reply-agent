@@ -26,7 +26,9 @@ def test_settings_reads_env(monkeypatch, tmp_path: Path):
     assert s.agent_db_path == tmp_path / "agent.db"
 
 
-def test_settings_missing_required(monkeypatch):
+def test_settings_missing_required(monkeypatch, tmp_path: Path):
+    # cd to an isolated dir so pydantic-settings can't fall back to a real .env in the repo root.
+    monkeypatch.chdir(tmp_path)
     for var in ("LUMENX_ADMIN_TOKEN", "ANTHROPIC_API_KEY", "AGENT_DASHBOARD_PASSWORD"):
         monkeypatch.delenv(var, raising=False)
     monkeypatch.setenv("LUMENX_BASE", "x")
