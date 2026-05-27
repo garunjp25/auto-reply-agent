@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from auto_reply.store.db import connect, transaction
+from auto_reply.store.migrations import apply_migrations, current_version
 
 
 def test_connect_creates_parent_dir(tmp_path: Path):
@@ -49,4 +50,27 @@ def test_transaction_rolls_back_on_exception(tmp_path: Path):
             raise RuntimeError("boom")
     rows = conn.execute("SELECT x FROM t").fetchall()
     assert rows == []
+    conn.close()
+
+
+def test_apply_migrations_runs_0001(tmp_path: Path):
+    conn = connect(tmp_path / "m.db")
+    apply_migrations(conn)
+    assert current_version(conn) == 1
+    tables = {r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'"
+    )}
+    expected = {
+        "schema_version", "threads_seen", "drafts", "sent_replies",
+        "feedback", "training_labels", "cost_log", "wiki_index",
+    }
+    assert expected.issubset(tables)
+    conn.close()
+
+
+def test_apply_migrations_is_idempotent(tmp_path: Path):
+    conn = connect(tmp_path / "m.db")
+    apply_migrations(conn)
+    apply_migrations(conn)
+    assert current_version(conn) == 1
     conn.close()
