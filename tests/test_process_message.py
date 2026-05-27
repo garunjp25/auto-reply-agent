@@ -112,10 +112,10 @@ def test_nested_thread_shape_from_real_lumenx_api(db):
     assert "How much is Pro?" in row["customer_msg"]
 
 
-def test_refund_marks_sensitive(db):
+def test_cancellation_marks_sensitive(db):
     llm = _llm_with_responses(
         db,
-        '{"intent": "refund"}',
+        '{"intent": "cancellation"}',
         "I'm sorry to hear that. I'll connect you with the team.",
     )
     intent_router = IntentRouter(llm=llm)
@@ -123,7 +123,7 @@ def test_refund_marks_sensitive(db):
     ctx_builder = ContextBuilder(wiki_text="WIKI")
 
     draft_id = process_message(
-        thread=_thread("I want a refund"),
+        thread=_thread("I want to cancel my subscription"),
         conn=db,
         intent_router=intent_router,
         context_builder=ctx_builder,
@@ -131,4 +131,4 @@ def test_refund_marks_sensitive(db):
     )
     row = db.execute("SELECT sensitive, intent FROM drafts WHERE id = ?", (draft_id,)).fetchone()
     assert row["sensitive"] == 1
-    assert row["intent"] == "refund"
+    assert row["intent"] == "cancellation"

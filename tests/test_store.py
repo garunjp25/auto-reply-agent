@@ -56,7 +56,7 @@ def test_transaction_rolls_back_on_exception(tmp_path: Path):
 def test_apply_migrations_runs_0001(tmp_path: Path):
     conn = connect(tmp_path / "m.db")
     apply_migrations(conn)
-    assert current_version(conn) == 1
+    assert current_version(conn) == 2
     tables = {r[0] for r in conn.execute(
         "SELECT name FROM sqlite_master WHERE type='table'"
     )}
@@ -72,5 +72,5 @@ def test_apply_migrations_is_idempotent(tmp_path: Path):
     conn = connect(tmp_path / "m.db")
     apply_migrations(conn)
     apply_migrations(conn)
-    assert current_version(conn) == 1
+    assert current_version(conn) == 2
     conn.close()

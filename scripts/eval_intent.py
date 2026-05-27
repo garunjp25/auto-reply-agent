@@ -20,7 +20,7 @@ from auto_reply.store.migrations import apply_migrations
 from auto_reply.tls import enable_system_certs
 
 FIXTURE = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "intent_eval.jsonl"
-ACCEPTANCE_THRESHOLD = 0.80
+ACCEPTANCE_THRESHOLD = 0.96
 
 
 def main() -> None:

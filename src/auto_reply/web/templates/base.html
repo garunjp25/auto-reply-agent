@@ -3,9 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}auto-reply{% endblock %}</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
   <style>
     body { font-family: -apple-system, system-ui, sans-serif; max-width: 1100px; margin: 2rem auto; padding: 0 1rem; color: #222; }
-    h1 { font-size: 1.4rem; }
+    h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+    nav { display: flex; gap: 0.5rem; margin: 0.75rem 0 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+    nav a { text-decoration: none; padding: 0.35rem 0.9rem; border-radius: 4px 4px 0 0; color: #446; font-size: 0.9rem; }
+    nav a:hover { background: #f0f4ff; }
+    nav a.active { background: #e8eeff; font-weight: 600; color: #113; border-bottom: 2px solid #448; }
     table { width: 100%; border-collapse: collapse; }
     th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #eee; vertical-align: top; }
     th { background: #fafafa; font-weight: 600; }
@@ -14,10 +19,25 @@
     .pill-intent    { background: #eef; color: #225; }
     pre.context { white-space: pre-wrap; max-height: 14rem; overflow: auto; background: #f7f7f7; padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; }
     .meta { color: #777; font-size: 0.8rem; }
+    .btn { display: inline-block; padding: 0.25rem 0.7rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .btn-approve { background: #2a7; color: #fff; }
+    .btn-edit    { background: #a72; color: #fff; }
+    .btn-reject  { background: #aaa; color: #fff; }
+    .edit-form   { display: none; margin-top: 0.4rem; }
+    .edit-form textarea { width: 100%; height: 5rem; font-size: 0.85rem; padding: 0.3rem; }
+    .stat-card { display: inline-block; background: #f5f7ff; border: 1px solid #dde; border-radius: 6px; padding: 0.75rem 1.25rem; margin: 0.4rem 0.4rem 0.4rem 0; }
+    .stat-card .val { font-size: 1.8rem; font-weight: 700; color: #224; }
+    .stat-card .lbl { font-size: 0.8rem; color: #778; }
+    .bar { display: inline-block; background: #4488ee; height: 12px; border-radius: 2px; }
   </style>
 </head>
 <body>
-  <header><h1>auto-reply / {% block heading %}{% endblock %}</h1></header>
+  <header><h1>🤖 auto-reply agent</h1></header>
+  <nav>
+    <a href="/agent/queue"    {% if active_tab == 'queue'    %}class="active"{% endif %}>Queue</a>
+    <a href="/agent/activity" {% if active_tab == 'activity' %}class="active"{% endif %}>Activity</a>
+    <a href="/agent/costs"    {% if active_tab == 'costs'    %}class="active"{% endif %}>Costs</a>
+  </nav>
   <main>{% block content %}{% endblock %}</main>
 </body>
 </html>

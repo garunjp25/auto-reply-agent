@@ -13,7 +13,7 @@ OTHER_REPLY = (
 
 _TABLE: dict[str, str] = {
     "greeting": GREETING_REPLY,
-    "other": OTHER_REPLY,
+    "conversational": OTHER_REPLY,
 }
 
 

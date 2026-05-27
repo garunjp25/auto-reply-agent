@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set active_tab = "activity" %}
+{% block title %}activity · auto-reply{% endblock %}
+{% block content %}
+<h2 style="font-size:1.1rem;margin-bottom:1rem;">Last 7 days</h2>
+
+<div>
+  <div class="stat-card"><div class="val">{{ total }}</div><div class="lbl">drafts processed</div></div>
+  <div class="stat-card"><div class="val">{{ approval_rate }}%</div><div class="lbl">approval rate</div></div>
+  <div class="stat-card"><div class="val">{{ approved }}</div><div class="lbl">approved</div></div>
+  <div class="stat-card"><div class="val">{{ edited }}</div><div class="lbl">edited</div></div>
+  <div class="stat-card"><div class="val">{{ rejected }}</div><div class="lbl">rejected</div></div>
+</div>
+
+<h3 style="font-size:1rem;margin:1.5rem 0 0.75rem;">By intent</h3>
+{% if intent_rows %}
+<table>
+  <thead><tr><th>Intent</th><th>Count</th><th>Bar</th></tr></thead>
+  <tbody>
+    {% set max_n = intent_rows[0].n %}
+    {% for r in intent_rows %}
+    <tr>
+      <td><span class="pill pill-intent">{{ r.intent }}</span></td>
+      <td>{{ r.n }}</td>
+      <td><span class="bar" style="width:{{ (r.n / max_n * 200)|int }}px"></span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="meta">No data yet.</p>
+{% endif %}
+
+<h3 style="font-size:1rem;margin:1.5rem 0 0.75rem;">By status</h3>
+{% if status_rows %}
+<table>
+  <thead><tr><th>Status</th><th>Count</th></tr></thead>
+  <tbody>
+    {% for r in status_rows %}
+    <tr><td>{{ r.status }}</td><td>{{ r.n }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="meta">No data yet.</p>
+{% endif %}
+{% endblock %}

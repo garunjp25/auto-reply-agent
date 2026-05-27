@@ -10,9 +10,9 @@ def test_fixture_exists():
     assert FIXTURE.exists(), "Run scripts/build_intent_eval.py to generate it."
 
 
-def test_fixture_has_30_entries():
+def test_fixture_has_33_entries():
     lines = [ln for ln in FIXTURE.read_text(encoding="utf-8").splitlines() if ln.strip()]
-    assert len(lines) == 30
+    assert len(lines) == 33
 
 
 def test_every_entry_has_valid_intent_and_nonempty_message():

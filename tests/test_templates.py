@@ -18,8 +18,8 @@ def test_short_circuit_reply_for_greeting():
     assert short_circuit_reply("greeting") == GREETING_REPLY
 
 
-def test_short_circuit_reply_for_other():
-    assert short_circuit_reply("other") == OTHER_REPLY
+def test_short_circuit_reply_for_conversational():
+    assert short_circuit_reply("conversational") == OTHER_REPLY
 
 
 def test_short_circuit_reply_for_non_short_circuit_returns_none():

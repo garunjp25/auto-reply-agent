@@ -1,10 +1,6 @@
-create a beautiful website visualization of this cross-referenced wiki in a node-edge (knowledge graph) format.
- 
-  I wnat to be able to interact with that graph
- 
-  and I also want this wiki to be queriable
- 
-   so create a query option where there is a chat box where I can ask any question regarding any question in the wiki or any knowledge in the wiki. I should be
+create a beautiful website visualization of this cross-referenced wiki in a node-edge (knowledge graph) format in cosmic theme, glowing planets, central hub layout with legends.
+I want to be able to interact with that graph and I also want this wiki to be queriable
+so create a query option where there is a chat box where I can ask any question regarding any question in the wiki or any knowledge in the wiki. I should be
   able to get an answer, and when I get an answer, it should be referencing the source document. I should know exactly which source document this answer is
   fetched from the wiki.
  

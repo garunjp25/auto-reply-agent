@@ -19,7 +19,7 @@ def test_health_endpoint(monkeypatch, tmp_path):
     assert r.status_code == 200
     body = r.json()
     assert body["status"] == "ok"
-    assert body["schema_version"] == 1
+    assert body["schema_version"] == 2
     assert (tmp_path / "agent.db").exists()
 
 

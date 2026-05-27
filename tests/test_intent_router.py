@@ -24,10 +24,14 @@ def _make_llm(db, label: str) -> LLMClient:
 
 def test_intents_constant_matches_spec():
     assert set(INTENTS) == {
-        "greeting", "pricing", "refund", "technical",
-        "feature_question", "integration", "other",
+        "greeting", "pricing", "discount", "billing",
+        "features", "technical", "integration",
+        "multi_product", "cancellation",
+        "competitor_comparison", "conversational",
     }
-    assert SENSITIVE_INTENTS == {"pricing", "refund"}
+    assert SENSITIVE_INTENTS == {
+        "pricing", "discount", "billing", "cancellation", "competitor_comparison"
+    }
 
 
 def test_classify_returns_intent_result(db):
@@ -47,19 +51,55 @@ def test_sensitive_flag_set_for_pricing(db):
     assert result.sensitive is True
 
 
-def test_sensitive_flag_set_for_refund(db):
-    llm = _make_llm(db, "refund")
+def test_sensitive_flag_set_for_cancellation(db):
+    llm = _make_llm(db, "cancellation")
     router = IntentRouter(llm=llm)
-    result = router.classify("I want my money back")
-    assert result.intent == "refund"
+    result = router.classify("I want to cancel my subscription")
+    assert result.intent == "cancellation"
     assert result.sensitive is True
 
 
-def test_unknown_label_falls_back_to_other(db):
+def test_sensitive_flag_set_for_discount(db):
+    llm = _make_llm(db, "discount")
+    router = IntentRouter(llm=llm)
+    result = router.classify("Any non-profit discounts available?")
+    assert result.intent == "discount"
+    assert result.sensitive is True
+
+
+def test_sensitive_flag_set_for_competitor_comparison(db):
+    llm = _make_llm(db, "competitor_comparison")
+    router = IntentRouter(llm=llm)
+    result = router.classify("How do you compare to Intercom?")
+    assert result.intent == "competitor_comparison"
+    assert result.sensitive is True
+
+
+def test_multi_product_pre_check_bypasses_llm(db):
+    """Two LumenX product names → multi_product without LLM call."""
+    llm = _make_llm(db, "integration")  # LLM would say integration — pre-check wins
+    router = IntentRouter(llm=llm)
+    result = router.classify("How do EmailPilot and PollWise work together?")
+    assert result.intent == "multi_product"
+    assert result.sensitive is False
+    # LLM must NOT have been called
+    llm.sdk.messages.create.assert_not_called()
+
+
+def test_single_product_integration_reaches_llm(db):
+    """One LumenX product + external tool → LLM decides → integration."""
+    llm = _make_llm(db, "integration")
+    router = IntentRouter(llm=llm)
+    result = router.classify("Can NoteHub connect to Obsidian?")
+    assert result.intent == "integration"
+    assert result.sensitive is False
+
+
+def test_unknown_label_falls_back_to_conversational(db):
     llm = _make_llm(db, "completely_made_up")
     router = IntentRouter(llm=llm)
     result = router.classify("???")
-    assert result.intent == "other"
+    assert result.intent == "conversational"
     assert result.sensitive is False
 
 
@@ -74,7 +114,7 @@ def test_classify_writes_cost_row(db):
     assert rows[0]["model"] == "claude-haiku-4-5-20251001"
 
 
-def test_malformed_json_falls_back_to_other(db):
+def test_malformed_json_falls_back_to_conversational(db):
     sdk = MagicMock()
     resp = MagicMock()
     resp.id = "msg_bad"
@@ -88,5 +128,5 @@ def test_malformed_json_falls_back_to_other(db):
 
     router = IntentRouter(llm=llm)
     result = router.classify("anything")
-    assert result.intent == "other"
+    assert result.intent == "conversational"
     assert result.sensitive is False

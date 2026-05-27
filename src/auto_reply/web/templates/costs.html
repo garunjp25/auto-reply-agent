@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% set active_tab = "costs" %}
+{% block title %}costs · auto-reply{% endblock %}
+{% block content %}
+<h2 style="font-size:1.1rem;margin-bottom:1rem;">API cost tracker</h2>
+
+<div>
+  <div class="stat-card">
+    <div class="val">${{ "%.4f"|format(total_usd) }}</div>
+    <div class="lbl">total spend (all time)</div>
+  </div>
+</div>
+
+<h3 style="font-size:1rem;margin:1.5rem 0 0.75rem;">Last 14 days — by day & purpose</h3>
+{% if daily_rows %}
+<table>
+  <thead><tr><th>Day</th><th>Purpose</th><th>Spend (USD)</th></tr></thead>
+  <tbody>
+    {% for r in daily_rows %}
+    <tr>
+      <td class="meta">{{ r.day }}</td>
+      <td><span class="pill pill-intent">{{ r.purpose }}</span></td>
+      <td>${{ "%.6f"|format(r.spend) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="meta">No cost data yet.</p>
+{% endif %}
+
+<h3 style="font-size:1rem;margin:1.5rem 0 0.75rem;">Top 5 most expensive calls</h3>
+{% if top_calls %}
+<table>
+  <thead><tr><th>Call ID</th><th>Model</th><th>Purpose</th><th>Cost</th><th>When</th></tr></thead>
+  <tbody>
+    {% for r in top_calls %}
+    <tr>
+      <td class="meta"><code>{{ r.call_id[:16] }}…</code></td>
+      <td>{{ r.model }}</td>
+      <td><span class="pill pill-intent">{{ r.purpose }}</span></td>
+      <td>${{ "%.6f"|format(r.cost_usd) }}</td>
+      <td class="meta">{{ r.at[:16] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="meta">No calls logged yet.</p>
+{% endif %}
+{% endblock %}

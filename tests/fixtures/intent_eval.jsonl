@@ -1,30 +1,33 @@
-{"message": "Can I export my stuff first?", "intent": "feature_question"}
-{"message": "Cool. And saved views per teammate?", "intent": "feature_question"}
-{"message": "yes please share", "intent": "other"}
-{"message": "File upload on InboxClean keeps failing at 80 percent.", "intent": "technical"}
-{"message": "Non-profit here, any chance of a discount on NoteHub?", "intent": "pricing"}
-{"message": "Interested in EmailPilot plus PollWise and maybe ChatRelay. Do they play well together?", "intent": "integration"}
-{"message": "oh hi! just wanted to see if you were real haha. will come back with a real q.", "intent": "greeting"}
-{"message": "Can we add 2 more products to hit the bundle?", "intent": "pricing"}
-{"message": "Can I get a proper invoice for accounting? My finance team needs a PDF with company details.", "intent": "pricing"}
-{"message": "Where do i download invoices", "intent": "feature_question"}
-{"message": "tried it, no luck. still broken.", "intent": "technical"}
-{"message": "Can i have the list of products", "intent": "other"}
-{"message": "How do we verify it worked?", "intent": "feature_question"}
-{"message": "Need to cancel my PixelDeck subscription, where do I go?", "intent": "refund"}
-{"message": "is there a QuickBooks integration for InvoiceFlow? important for us", "intent": "integration"}
-{"message": "Explain product pricing", "intent": "pricing"}
-{"message": "Can you describe all product types", "intent": "feature_question"}
-{"message": "Looking at ChatRelay. Is topic routing something it does out of the box?", "intent": "feature_question"}
-{"message": "oh hi! just wanted to see if you were real haha. will come back with a real q.", "intent": "greeting"}
-{"message": "tried it, no luck. still broken.", "intent": "technical"}
-{"message": "Hey, trying to wire up NoteHub with Obsidian export. Possible?", "intent": "integration"}
-{"message": "Perfect, sending the info now.", "intent": "greeting"}
-{"message": "HI. Get me the list of the products", "intent": "other"}
-{"message": "Why pick DocuMerge over the big PDF tool? Already paying for that.", "intent": "other"}
-{"message": "What happens to my data after cancel?", "intent": "refund"}
-{"message": "Does CalendarSync support daily meeting cap and buffer time?", "intent": "feature_question"}
-{"message": "LLM wiki details", "intent": "other"}
-{"message": "Give me the Payce Pipeline for Middle east sales", "intent": "other"}
-{"message": "Got it. What about volume discounts if we go up to 10 seats?", "intent": "pricing"}
-{"message": "Cancel pls. Will I get a refund?", "intent": "refund"}
+{"message": "Hey! Just checking in — are you a real person?", "intent": "greeting"}
+{"message": "Perfect, thanks so much for your help today!", "intent": "greeting"}
+{"message": "Hi there, I'll come back with a proper question in a moment.", "intent": "greeting"}
+{"message": "What does the InvoiceFlow Pro plan cost per month?", "intent": "pricing"}
+{"message": "Is ChatRelay free or paid? What are the tiers?", "intent": "pricing"}
+{"message": "How much does it cost to add 5 more seats to our EmailPilot plan?", "intent": "pricing"}
+{"message": "We're a non-profit — any chance of a discount on NoteHub?", "intent": "discount"}
+{"message": "Do you offer volume discounts if we go up to 10 seats?", "intent": "discount"}
+{"message": "Is there a startup or early-stage pricing program available?", "intent": "discount"}
+{"message": "Can I get a proper PDF invoice for our finance team?", "intent": "billing"}
+{"message": "Where do I download past invoices for my account?", "intent": "billing"}
+{"message": "There's an unexpected charge on my statement from last month — what is it?", "intent": "billing"}
+{"message": "Does CalendarSync support daily meeting caps and buffer time between events?", "intent": "features"}
+{"message": "Can I export my data from PixelDeck before switching plans?", "intent": "features"}
+{"message": "Looking at ChatRelay — does it do topic-based routing out of the box?", "intent": "features"}
+{"message": "File upload on InboxClean keeps failing at 80% — any idea why?", "intent": "technical"}
+{"message": "Getting a 500 error whenever I try to open the DocuMerge dashboard.", "intent": "technical"}
+{"message": "PollWise responses stopped syncing since yesterday — it's broken.", "intent": "technical"}
+{"message": "Is there a QuickBooks integration for InvoiceFlow?", "intent": "integration"}
+{"message": "Can NoteHub export directly into Obsidian?", "intent": "integration"}
+{"message": "Does EmailPilot connect with Zapier for automation workflows?", "intent": "integration"}
+{"message": "We're looking at EmailPilot plus PollWise — do they work well together?", "intent": "multi_product"}
+{"message": "Interested in InvoiceFlow and DocuMerge as a bundle — is there a combined price?", "intent": "multi_product"}
+{"message": "How do ChatRelay, NoteHub, and CalendarSync compare for a support team setup?", "intent": "multi_product"}
+{"message": "Need to cancel my PixelDeck subscription — how do I do that?", "intent": "cancellation"}
+{"message": "I want to pause or end my InvoiceFlow account this month.", "intent": "cancellation"}
+{"message": "What happens to my data if I cancel my NoteHub plan?", "intent": "cancellation"}
+{"message": "Why would I pick DocuMerge over Adobe Acrobat? Already paying for that.", "intent": "competitor_comparison"}
+{"message": "We're comparing ChatRelay to Intercom — what makes yours better?", "intent": "competitor_comparison"}
+{"message": "Honest question: how does InvoiceFlow stack up against FreshBooks?", "intent": "competitor_comparison"}
+{"message": "yes please share", "intent": "conversational"}
+{"message": "Can you describe all product types?", "intent": "conversational"}
+{"message": "Give me the Payce Pipeline for Middle East sales.", "intent": "conversational"}
