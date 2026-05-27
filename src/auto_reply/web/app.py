@@ -41,8 +41,11 @@ def create_app(*, run_poller: bool = True) -> FastAPI:
     llm = LLMClient(sdk=sdk, conn=conn)
     intent_router = IntentRouter(llm=llm)
     wiki_loader = WikiLoader(WIKI_DIR)
-    wiki_text = wiki_loader.concatenated() if WIKI_DIR.exists() else ""
-    wiki_docs = wiki_loader.load_all() if WIKI_DIR.exists() else {}
+    wiki_available = WIKI_DIR.exists() and any(WIKI_DIR.glob("*.md"))
+    if not wiki_available:
+        log.warning("wiki/ not found or empty — wiki Q&A disabled, agent still runs")
+    wiki_text = wiki_loader.concatenated() if wiki_available else ""
+    wiki_docs = wiki_loader.load_all() if wiki_available else {}
     ctx_builder = ContextBuilder(wiki_text=wiki_text)
     drafter = Drafter(llm=llm)
     wiki_qa = WikiQA(llm=llm, wiki_docs=wiki_docs)

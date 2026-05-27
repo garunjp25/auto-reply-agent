@@ -1,0 +1,14 @@
+[phases.setup]
+nixPkgs = ["python311"]
+
+[phases.install]
+cmds = ["pip install uv", "uv sync --frozen"]
+
+[phases.build]
+cmds = [
+  "uv run python scripts/build_wiki.py || echo 'WARN: wiki build skipped (check API keys)'",
+  "uv run python scripts/build_wiki_graph.py || echo 'WARN: graph build skipped'"
+]
+
+[start]
+cmd = "uv run uvicorn auto_reply.web.app:create_app --factory --host 0.0.0.0 --port $PORT"
