@@ -38,7 +38,8 @@ class ContextBuilder:
         self._wiki_text = wiki_text
 
     def build(self, *, thread: dict[str, Any], intent: str) -> DraftContext:
-        messages = thread.get("messages", [])
+        # Real LumenX nests messages inside `thread`; some test fixtures put them at root.
+        messages = thread.get("thread", {}).get("messages") or thread.get("messages") or []
         if not messages:
             raise ValueError("thread has no messages")
 

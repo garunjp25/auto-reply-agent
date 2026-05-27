@@ -20,8 +20,12 @@ def process_message(
     context_builder: ContextBuilder,
     drafter: Drafter,
 ) -> int:
-    """Run the pipeline for one thread and write one row to `drafts`."""
-    messages = thread.get("messages", [])
+    """Run the pipeline for one thread and write one row to `drafts`.
+
+    Accepts both shapes the LumenX admin API uses: real `/api/admin/threads/{id}`
+    nests messages inside `thread`; some test fixtures put them at the root.
+    """
+    messages = thread.get("thread", {}).get("messages") or thread.get("messages") or []
     customer_msgs = [m for m in messages if m.get("role") == "customer"]
     if not customer_msgs:
         raise ValueError("thread has no customer messages")

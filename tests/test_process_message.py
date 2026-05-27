@@ -80,6 +80,38 @@ def test_greeting_short_circuits_no_draft_call(db):
     assert llm.sdk.messages.create.call_count == 1
 
 
+def test_nested_thread_shape_from_real_lumenx_api(db):
+    """Real /api/admin/threads/{id} returns {thread: {..., messages: [...]}}."""
+    llm = _llm_with_responses(
+        db,
+        '{"intent": "pricing"}',
+        "The Pro plan is $25/month.",
+    )
+    intent_router = IntentRouter(llm=llm)
+    drafter = Drafter(llm=llm)
+    ctx_builder = ContextBuilder(wiki_text="WIKI")
+
+    nested_thread = {
+        "thread": {
+            "id": "live-abc",
+            "customer_username": "alice",
+            "messages": [
+                {"role": "customer", "text": "How much is Pro?"},
+            ],
+        }
+    }
+    draft_id = process_message(
+        thread=nested_thread,
+        conn=db,
+        intent_router=intent_router,
+        context_builder=ctx_builder,
+        drafter=drafter,
+    )
+    row = db.execute("SELECT thread_id, customer_msg FROM drafts WHERE id = ?", (draft_id,)).fetchone()
+    assert row["thread_id"] == "live-abc"
+    assert "How much is Pro?" in row["customer_msg"]
+
+
 def test_refund_marks_sensitive(db):
     llm = _llm_with_responses(
         db,
