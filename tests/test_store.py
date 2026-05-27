@@ -25,8 +25,18 @@ def test_transaction_commits_on_success(tmp_path: Path):
     conn.execute("CREATE TABLE t (x INTEGER)")
     with transaction(conn):
         conn.execute("INSERT INTO t VALUES (1)")
-    rows = conn.execute("SELECT x FROM t").fetchall()
+    rows = [tuple(r) for r in conn.execute("SELECT x FROM t").fetchall()]
     assert rows == [(1,)]
+    conn.close()
+
+
+def test_connect_returns_row_factory(tmp_path: Path):
+    conn = connect(tmp_path / "row.db")
+    conn.execute("CREATE TABLE t (a INTEGER, b TEXT)")
+    conn.execute("INSERT INTO t VALUES (1, 'x')")
+    row = conn.execute("SELECT a, b FROM t").fetchone()
+    assert row["a"] == 1
+    assert row["b"] == "x"
     conn.close()
 
 
