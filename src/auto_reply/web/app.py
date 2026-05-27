@@ -13,6 +13,7 @@ from auto_reply.pipeline.context_builder import ContextBuilder
 from auto_reply.pipeline.drafter import Drafter
 from auto_reply.pipeline.intent_router import IntentRouter
 from auto_reply.pipeline.process_message import process_message
+from auto_reply.pipeline.wiki_qa import WikiQA
 from auto_reply.settings import get_settings
 from auto_reply.sources.lumenx import LumenXClient
 from auto_reply.sources.poller import Poller
@@ -21,8 +22,10 @@ from auto_reply.store.db import connect
 from auto_reply.store.migrations import apply_migrations, current_version
 from auto_reply.tls import enable_system_certs
 from auto_reply.web.dashboard import make_router
+from auto_reply.web.wiki_explorer import make_router as make_wiki_router
 
 WIKI_DIR = Path(__file__).resolve().parents[3] / "wiki"
+GRAPH_PATH = Path(__file__).resolve().parents[3] / "data" / "wiki_graph.json"
 
 log = logging.getLogger(__name__)
 
@@ -36,9 +39,12 @@ def create_app(*, run_poller: bool = True) -> FastAPI:
     sdk = Anthropic(api_key=settings.anthropic_api_key)
     llm = LLMClient(sdk=sdk, conn=conn)
     intent_router = IntentRouter(llm=llm)
-    wiki_text = WikiLoader(WIKI_DIR).concatenated() if WIKI_DIR.exists() else ""
+    wiki_loader = WikiLoader(WIKI_DIR)
+    wiki_text = wiki_loader.concatenated() if WIKI_DIR.exists() else ""
+    wiki_docs = wiki_loader.load_all() if WIKI_DIR.exists() else {}
     ctx_builder = ContextBuilder(wiki_text=wiki_text)
     drafter = Drafter(llm=llm)
+    wiki_qa = WikiQA(llm=llm, wiki_docs=wiki_docs)
     lumenx = LumenXClient(settings.lumenx_base, settings.lumenx_admin_token)
 
     def _process(thread):
@@ -81,4 +87,7 @@ def create_app(*, run_poller: bool = True) -> FastAPI:
         return {"status": "ok", "schema_version": current_version(conn)}
 
     app.include_router(make_router(conn=conn, password=settings.agent_dashboard_password))
+    app.include_router(
+        make_wiki_router(wiki_dir=WIKI_DIR, graph_path=GRAPH_PATH, wiki_qa=wiki_qa)
+    )
     return app
