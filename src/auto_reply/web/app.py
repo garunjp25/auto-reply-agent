@@ -7,6 +7,7 @@ from pathlib import Path
 
 from anthropic import Anthropic
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 from auto_reply.llm.client import LLMClient
 from auto_reply.pipeline.context_builder import ContextBuilder
@@ -81,6 +82,34 @@ def create_app(*, run_poller: bool = True) -> FastAPI:
     app = FastAPI(title="auto-reply-agent", version="0.0.0", lifespan=lifespan)
     app.state.db = conn
     app.state.settings = settings
+
+    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+    def index() -> str:
+        return """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>auto-reply agent</title>
+<style>
+  body{font-family:-apple-system,system-ui,sans-serif;max-width:520px;margin:4rem auto;padding:0 1rem;color:#222}
+  h1{font-size:1.5rem;margin-bottom:0.25rem}p.sub{color:#666;margin-bottom:2rem}
+  .cards{display:flex;gap:1rem;flex-wrap:wrap}
+  .card{flex:1;min-width:200px;border:1px solid #dde;border-radius:8px;padding:1.25rem 1.5rem;text-decoration:none;color:inherit}
+  .card:hover{background:#f5f7ff;border-color:#aac}
+  .card h2{font-size:1rem;margin:0 0 0.4rem}
+  .card p{font-size:0.85rem;color:#556;margin:0}
+</style></head>
+<body>
+  <h1>🤖 auto-reply agent</h1>
+  <p class="sub">LumenX customer-support automation</p>
+  <div class="cards">
+    <a class="card" href="/wiki">
+      <h2>📚 Wiki Explorer</h2>
+      <p>Interactive knowledge graph + AI-powered Q&amp;A across all product docs</p>
+    </a>
+    <a class="card" href="/agent/queue">
+      <h2>🗂 Agent Dashboard</h2>
+      <p>Review and action pending draft replies (Queue · Activity · Costs)</p>
+    </a>
+  </div>
+</body></html>"""
 
     @app.get("/health")
     def health() -> dict:
