@@ -103,6 +103,32 @@ def test_get_doc_rejects_path_traversal(tmp_path: Path):
     assert r.status_code in (404, 422)
 
 
+def test_get_doc_appends_related_products(tmp_path: Path):
+    wiki = _seed_wiki(tmp_path)
+    graph = _seed_graph(tmp_path)
+    qa = MagicMock()
+    client = TestClient(_app(wiki_dir=wiki, graph_path=graph, wiki_qa=qa))
+    r = client.get("/wiki/doc/emailpilot")
+    assert r.status_code == 200
+    body = r.json()
+    assert "Related Products" in body["markdown"]
+    assert "(product:invoiceflow)" in body["markdown"]
+    assert any(rel["id"] == "invoiceflow" for rel in body["related"])
+
+
+def test_get_doc_related_empty_when_graph_missing(tmp_path: Path):
+    wiki = _seed_wiki(tmp_path)
+    missing_graph = tmp_path / "missing.json"
+    qa = MagicMock()
+    client = TestClient(_app(wiki_dir=wiki, graph_path=missing_graph, wiki_qa=qa))
+    r = client.get("/wiki/doc/emailpilot")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["related"] == []
+    assert "Email tool" in body["markdown"]
+    assert "Related Products" not in body["markdown"]
+
+
 def test_post_ask_returns_answer(tmp_path: Path):
     wiki = _seed_wiki(tmp_path)
     graph = _seed_graph(tmp_path)

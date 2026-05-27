@@ -19,6 +19,59 @@ class _AskBody(BaseModel):
     question: str = Field(min_length=1)
 
 
+def _related_for(product_id: str, graph_path: Path) -> list[dict[str, str]]:
+    """Return up to 8 related products derived from the graph's edges.
+
+    Edges are treated as undirected; the partner endpoint becomes the relation
+    target. The graph JSON has been validated by the build script so missing
+    endpoints are rare, but we defensively filter them anyway.
+    """
+    if not graph_path.exists():
+        return []
+    try:
+        graph = json.loads(graph_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+    label_by_id: dict[str, str] = {
+        n["id"]: n.get("label") or n["id"]
+        for n in graph.get("nodes", [])
+        if isinstance(n, dict) and "id" in n
+    }
+    related: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for e in graph.get("edges", []) or []:
+        if not isinstance(e, dict):
+            continue
+        src = e.get("source")
+        tgt = e.get("target")
+        partner = tgt if src == product_id else (src if tgt == product_id else None)
+        if partner is None or partner in seen or partner not in label_by_id:
+            continue
+        seen.add(partner)
+        related.append({
+            "id": partner,
+            "label": label_by_id[partner],
+            "relation": str(e.get("relation") or ""),
+            "reason": str(e.get("reason") or ""),
+        })
+    return related[:8]
+
+
+def _format_related_section(related: list[dict[str, str]]) -> str:
+    """Render the related-products block as a markdown section.
+
+    Links use the `product:<id>` scheme so the SPA can intercept clicks and
+    navigate within the wiki instead of letting the browser follow the link.
+    """
+    if not related:
+        return ""
+    lines = ["\n\n---\n\n## Related Products\n"]
+    for r in related:
+        reason = f" — _{r['reason']}_" if r["reason"] else ""
+        lines.append(f"- [{r['label']}](product:{r['id']}){reason}")
+    return "\n".join(lines) + "\n"
+
+
 def make_router(
     *,
     wiki_dir: Path,
@@ -43,13 +96,16 @@ def make_router(
         return JSONResponse(data)
 
     @router.get("/doc/{product_id}")
-    def doc(product_id: str) -> dict[str, str]:
+    def doc(product_id: str) -> dict[str, Any]:
         if not product_id.replace("-", "").replace("_", "").isalnum():
             raise HTTPException(status_code=404)
         path = wiki_dir / f"{product_id}.md"
         if not path.exists() or not path.is_file():
             raise HTTPException(status_code=404)
-        return {"product_id": product_id, "markdown": path.read_text(encoding="utf-8")}
+        markdown = path.read_text(encoding="utf-8")
+        related = _related_for(product_id, graph_path)
+        markdown += _format_related_section(related)
+        return {"product_id": product_id, "markdown": markdown, "related": related}
 
     @router.post("/ask")
     def ask(body: _AskBody) -> dict[str, Any]:

@@ -260,9 +260,13 @@
     });
   });
 
-  cy.on("tap", "node", async (evt) => {
-    const id = evt.target.id();
+  async function loadProduct(id) {
     cy.nodes().removeClass("hl");
+    const node = cy.getElementById(id);
+    if (node && node.length) {
+      node.select();
+      cy.animate({ center: { eles: node }, zoom: 1.3 }, { duration: 300 });
+    }
     document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
     document.querySelector(`.tab[data-tab="detail"]`).classList.add("active");
     document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
@@ -273,7 +277,18 @@
     if (!r.ok) { panel.innerHTML = `<div class="placeholder">No wiki entry for <code>${id}</code></div>`; return; }
     const body = await r.json();
     panel.innerHTML = `<div class="detail-doc">${marked.parse(body.markdown)}</div>`;
-  });
+    // Intercept clicks on cross-product links (href="product:<id>")
+    panel.querySelectorAll('a[href^="product:"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = a.getAttribute("href").slice("product:".length);
+        loadProduct(targetId);
+        panel.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  }
+
+  cy.on("tap", "node", (evt) => loadProduct(evt.target.id()));
 
   cy.on("tap", (evt) => {
     if (evt.target === cy) {
